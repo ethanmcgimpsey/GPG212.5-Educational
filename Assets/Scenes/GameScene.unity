@@ -1442,12 +1442,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questionAndAnswers:
-  - question: Test
-    answer: Right
-  - question: Question
-    answer: Answer
-  - question: This is right
-    answer: This is wrong
+  - question: What's 1 +1?
+    answer:
+    - 2
+    - two
+    - too
+  - question: What's 1 +2?
+    answer:
+    - 2
+    - two
+    - too
+  - question: What's 1 +3?
+    answer:
+    - 2
+    - two
+    - too
+    - too
+    - too
+  - question: What's 1 +6?
+    answer:
+    - 2
+    - two
+    - too
+    - too
+    - too
+  - question: What's 1 +5?
+    answer:
+    - 2
+    - two
+    - too
+    - too
+    - too
+  - question: What's 1 +4?
+    answer:
+    - 2
+    - two
+    - too
+    - too
+    - too
   questionText: {fileID: 1911289601}
   livesText: {fileID: 660708721}
   timerText: {fileID: 1391556560}
@@ -1456,10 +1488,11 @@ MonoBehaviour:
   playerStartPosition: {fileID: 1430312591}
   playerQuestionPosition: {fileID: 474105327}
   playerEndPosition: {fileID: 210542215}
+  questionCounter: 0
   isCountingDown: 0
   currentQuestion:
     question: 
-    answer: 
+    answer: []
   lives: 3
   countDownTimer: 14
 --- !u!4 &1649199904

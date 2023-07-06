@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GameController : MonoBehaviour
     public TextMeshProUGUI questionText, livesText, timerText;
     public TMP_InputField answerField;
     public Transform player, playerStartPosition, playerQuestionPosition, playerEndPosition;
+    public int questionCounter = 0;
 
     [SerializeField] private bool isCountingDown;
     [SerializeField] private QuestionAndAnswer currentQuestion;
@@ -17,6 +20,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
+        questionAndAnswers = questionAndAnswers.OrderBy(item => Random.Range(0f, 1f)).ToList(); //Shuffles the question list
         ResetRoom();
         livesText.text = "Lives: " + lives;
     }
@@ -27,6 +31,10 @@ public class GameController : MonoBehaviour
         {
             countDownTimer -= Time.deltaTime;
             DisplayTime(countDownTimer);
+            if (countDownTimer <= 0)
+            {
+                SceneManager.LoadScene("GameOverMenu");
+            }
         }
         else
         {
@@ -66,7 +74,7 @@ public class GameController : MonoBehaviour
         }
 
         answerField.interactable = true;
-        currentQuestion = questionAndAnswers[Random.Range(0, questionAndAnswers.Count)];
+        currentQuestion = questionAndAnswers[questionCounter++];
         questionText.text = currentQuestion.question;
         isCountingDown = true;
     }
@@ -82,13 +90,21 @@ public class GameController : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-
-        ResetRoom();
+        if (questionCounter>=6)
+        {
+            SceneManager.LoadScene("WinScreen");
+        }
+        else
+        {
+            ResetRoom();
+        }
+        
     }
 
     public void OnAnswer()
     {
-        if (answerField.text.ToLower() == currentQuestion.answer.ToLower())
+        // if (answerField.text.ToLower() == currentQuestion.answer.ToLower())
+        if(currentQuestion.answer.Contains(answerField.text.ToLower()))
         {
             StartCoroutine(ExitRoom());
         }
@@ -97,12 +113,16 @@ public class GameController : MonoBehaviour
             lives -= 1;
         }
         livesText.text = "Lives: " + lives;
+        if (lives<0)
+        {
+            SceneManager.LoadScene("GameOverMenu");
+        }
     }
 
     [System.Serializable]
     public class QuestionAndAnswer
     {
         public string question;
-        public string answer;
+        public List < string > answer;
     }
 }
