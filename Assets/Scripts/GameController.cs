@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
         answerField.text = "";
         player.position = playerStartPosition.position;
         answerField.interactable = false;
-        countDownTimer = 14f;
+        countDownTimer = 19f;
         DisplayTime(countDownTimer);
         StartCoroutine(EnterRoom());
     }
@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-        if (questionCounter>=6)
+        if (questionCounter>=8)
         {
             SceneManager.LoadScene("WinScreen");
         }
@@ -113,7 +113,7 @@ public class GameController : MonoBehaviour
             lives -= 1;
         }
         livesText.text = "Lives: " + lives;
-        if (lives<0)
+        if (lives < 0)
         {
             SceneManager.LoadScene("GameOverMenu");
         }
