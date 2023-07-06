@@ -6,58 +6,103 @@ using TMPro;
 public class GameController : MonoBehaviour
 {
     public List<QuestionAndAnswer> questionAndAnswers = new List<QuestionAndAnswer>();
-    public TextMeshProUGUI questionText; //All references to ingame objects
+    public TextMeshProUGUI questionText, livesText, timerText;
     public TMP_InputField answerField;
     public Transform player, playerStartPosition, playerQuestionPosition, playerEndPosition;
-    // Start is called before the first frame update
+
+    [SerializeField] private bool isCountingDown;
+    [SerializeField] private QuestionAndAnswer currentQuestion;
+    [SerializeField] private int lives;
+    [SerializeField] private float countDownTimer;
+
     void Start()
     {
         ResetRoom();
+        livesText.text = "Lives: " + lives;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (isCountingDown == true)
+        {
+            countDownTimer -= Time.deltaTime;
+            DisplayTime(countDownTimer);
+        }
+        else
+        {
+            return;
+        }
     }
+
+    // Reset everything in the room
     public void ResetRoom()
     {
-        questionText.text = ""; //Resets question/room
-        answerField.text = ""; //Resets answer field
-        player.position = playerStartPosition.position; //Resets player's position
+        questionText.text = "";
+        answerField.text = "";
+        player.position = playerStartPosition.position;
         answerField.interactable = false;
+        countDownTimer = 14f;
+        DisplayTime(countDownTimer);
         StartCoroutine(EnterRoom());
-
     }
+
+    // Display the timer ui text.
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
     public IEnumerator EnterRoom()
     {
-        float timer = 0; //Creating a timer variable and setting it to 0. 
-        while (timer < 1) //Loops the code while timer is less than one
+        float timer = 0;
+        while (timer < 2)
         {
-            player.position = Vector3.Lerp(playerStartPosition.position, playerQuestionPosition.position, timer); //Moves the player from the start position to the question position over the span of the timer
-            timer += Time.deltaTime; //increasing the timer
-            yield return null; //waits til next frame
+            player.position = Vector3.Lerp(playerStartPosition.position, playerQuestionPosition.position, timer);
+            timer += Time.deltaTime;
+            yield return null;
         }
-        //ask the question
-        answerField.interactable = true; //Enables answer field
-        QuestionAndAnswer currentQuestion = questionAndAnswers[Random.Range(0, questionAndAnswers.Count)]; //picks random question and answer
-        questionText.text = currentQuestion.question; //Displays the question text
+
+        answerField.interactable = true;
+        currentQuestion = questionAndAnswers[Random.Range(0, questionAndAnswers.Count)];
+        questionText.text = currentQuestion.question;
+        isCountingDown = true;
     }
+
     public IEnumerator ExitRoom()
     {
-        answerField.interactable = false; //Disables answer field
-        float timer = 0; //Creating a timer variable and setting it to 0. 
-        while (timer < 1) //Loops the code while timer is less than one
+        answerField.interactable = false;
+        float timer = 0;
+        isCountingDown = false;
+        while (timer < 2)
         {
-            player.position = Vector3.Lerp(playerQuestionPosition.position, playerEndPosition.position, timer); //Moves the player from the start position to the question position over the span of the timer
-            timer += Time.deltaTime; //increasing the timer
-            yield return null; //waits til next frame
+            player.position = Vector3.Lerp(playerQuestionPosition.position, playerEndPosition.position, timer);
+            timer += Time.deltaTime;
+            yield return null;
         }
+
         ResetRoom();
     }
+
     public void OnAnswer()
     {
-        StartCoroutine(ExitRoom()); //Has player leave room when answer is correct
+        if (answerField.text.ToLower() == currentQuestion.answer.ToLower())
+        {
+            StartCoroutine(ExitRoom());
+        }
+        else
+        {
+            lives -= 1;
+        }
+        livesText.text = "Lives: " + lives;
     }
-    
+
+    [System.Serializable]
+    public class QuestionAndAnswer
+    {
+        public string question;
+        public string answer;
+    }
 }

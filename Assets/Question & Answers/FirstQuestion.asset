@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b835fade2f3e4e26ac817e5991b2071, type: 3}
   m_Name: FirstQuestion
   m_EditorClassIdentifier: 
-  question: Synoym
-  answer: Answer
+  question: Test
+  answer: Right
