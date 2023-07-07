@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour
         answerField.text = "";
         player.position = playerStartPosition.position;
         answerField.interactable = false;
-        countDownTimer = 19f;
+        countDownTimer = 24f;
         DisplayTime(countDownTimer);
         StartCoroutine(EnterRoom());
     }
@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-        if (questionCounter>=8)
+        if (questionCounter>=9)
         {
             SceneManager.LoadScene("WinScreen");
         }
@@ -103,6 +103,7 @@ public class GameController : MonoBehaviour
 
     public void OnAnswer()
     {
+        // DEBVUG LOG
         // if (answerField.text.ToLower() == currentQuestion.answer.ToLower())
         if(currentQuestion.answer.Contains(answerField.text.ToLower()))
         {
@@ -113,7 +114,7 @@ public class GameController : MonoBehaviour
             lives -= 1;
         }
         livesText.text = "Lives: " + lives;
-        if (lives < 0)
+        if (lives == 0)
         {
             SceneManager.LoadScene("GameOverMenu");
         }

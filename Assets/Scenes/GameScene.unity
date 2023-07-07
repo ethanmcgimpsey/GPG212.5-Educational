@@ -730,7 +730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -2.3815918, y: 0.000579834}
+  m_AnchoredPosition: {x: -2.3815918, y: 0.0005493164}
   m_SizeDelta: {x: 4.76001, y: -0.3999939}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &719807784
@@ -1444,8 +1444,8 @@ MonoBehaviour:
   questionAndAnswers:
   - question: What's 23 + 54?
     answer:
-    - 2
-    - two
+    - 77
+    - seventy seven
   - question: What's 12 x 5?
     answer:
     - 60
@@ -1454,13 +1454,12 @@ MonoBehaviour:
       any R's?
     answer:
     - that
-  - question: 'When did '
+  - question: What is something that you can catch but can never throw
     answer:
-    - 7
-    - seven
-  - question: When year did CS:GO release?
-    answer:
-    - 2012
+    - cold
+    - sick
+    - virus
+    - covid
   - question: What's 4 x 12
     answer:
     - 48
@@ -1480,10 +1479,19 @@ MonoBehaviour:
     - hitman
     - gunman
     - gun man
-  - question: Hot water will immeditaly vaperise when thrown into freezing air. (1
-      = True/0 = False)
+    - bounty hunter
+    - bounty
+  - question: Hot water will immeditaly vaperise when thrown into freezing air. (True/False)
     answer:
-    - 1
+    - true
+  - question: What's 9 + 10?
+    answer:
+    - 19
+    - nineteen
+  - question: How many rounds does a 1911 pistol have in a clip?
+    answer:
+    - 7
+    - seven
   questionText: {fileID: 1911289601}
   livesText: {fileID: 660708721}
   timerText: {fileID: 1391556560}
@@ -1498,7 +1506,7 @@ MonoBehaviour:
     question: 
     answer: []
   lives: 3
-  countDownTimer: 14
+  countDownTimer: 25
 --- !u!4 &1649199904
 Transform:
   m_ObjectHideFlags: 0
